@@ -1,0 +1,17 @@
+
+spring:
+  datasource:
+    password: zz123456.ZZ
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://youxiu326.xin:3306/super_man?useUnicode=true&characterEncoding=utf8
+    username: youxiu326
+  redis:
+    host: youxiu326.xin
+
+server:
+  port: 8080
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*.xml
