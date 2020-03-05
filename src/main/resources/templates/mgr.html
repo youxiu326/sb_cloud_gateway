@@ -3,10 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>这是管理界面</title>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="/css/element.css" />
 </head>
 <body>
 
-    <h3>aaa</h3>
+   <div id="app">
+
+
+   </div>
 
 </body>
+
+<script src="/js/vue.js"></script>
+<script src="/js/element.js"></script>
+<script src="/js/util.js"></script>
+<script>
+
+    var app = new Vue({
+        data:{},
+        methods: {
+            init:function(){
+                this.ajax.get("/route/refresh",function (data){
+                    console.log(data);
+                },"str");//json
+            }
+        },
+        created: function () {
+            this.init();
+        },
+    });
+
+
+</script>
+
 </html>
