@@ -7,6 +7,13 @@ spring:
     username: youxiu326
   redis:
     host: youxiu326.xin
+  freemarker:
+    settings:
+      classic_compatible: true
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      number_format: '#.##'
+      template_exception_handler: debug
+    suffix: .html
 
 server:
   port: 8080

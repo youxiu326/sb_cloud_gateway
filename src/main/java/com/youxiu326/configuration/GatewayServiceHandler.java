@@ -85,6 +85,10 @@ public class GatewayServiceHandler implements ApplicationEventPublisherAware, Co
             filterParams.put("_genkey_0", gatewayRoute.getFilters().toString());
             filterDefinition.setArgs(filterParams);
 
+            PredicateDefinition predicate2 = new PredicateDefinition();
+            predicate2.setName("Query");
+
+
             definition.setPredicates(Arrays.asList(predicate));
             definition.setFilters(Arrays.asList(filterDefinition));
             definition.setUri(uri);
