@@ -59,7 +59,7 @@ public class RouteController {
         return "success";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) throws Exception {
         gatewayRouteService.delete(id);
         gatewayServiceHandler.deleteRoute(id);

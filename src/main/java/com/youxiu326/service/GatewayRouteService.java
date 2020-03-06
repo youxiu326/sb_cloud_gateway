@@ -24,6 +24,9 @@ public class GatewayRouteService {
         BeanUtils.copyProperties(gatewayRouteDto, gatewayRoute);
         gatewayRoute.setCreateDate(new Date());
         gatewayRoute.setCreatorId("");
+        if (gatewayRoute.getId()!=null){
+            return gatewayRouteMapper.updateByPrimaryKeySelective(gatewayRoute);
+        }
         return gatewayRouteMapper.insertSelective(gatewayRoute);
     }
 

@@ -10,7 +10,7 @@
 
    <div id="app">
 
-       <el-button size="mini" type="primary" icon="plus" @click="btnToEdit" >新增</el-button>
+       <el-button size="mini" type="primary" icon="plus" @click="btnToAdd" >新增</el-button>
 
        <template>
            <el-table :data="tableData" style="width: 100%">
@@ -22,6 +22,8 @@
                <el-table-column label="操作" width="300">
                    <template scope="scope">
                        <el-button   @click="btnToDetail(scope.$index, scope.row)" style="display: inline-block;" size="mini" type="info"  >详情</el-button>
+                       <el-button   @click="btnToEdit(scope.$index, scope.row)" style="display: inline-block;" size="mini"  >编辑</el-button>
+                       <el-button   @click="btnToDel(scope.$index, scope.row)" style="display: inline-block;" size="mini" type="danger"  >删除</el-button>
                    </template>
                </el-table-column>
            </el-table>
@@ -33,8 +35,8 @@
                <el-form-item v-show="false" prop="id" label="主键" :label-width="labelWidth">
                    <el-input v-model.trim="form.id" auto-complete="off"></el-input>
                </el-form-item>
-               <el-form-item prop="groupCode" label="编号" :label-width="labelWidth">
-                   <el-input v-model.trim="form.groupCode" auto-complete="off"></el-input>
+               <el-form-item prop="serviceId" label="编号" :label-width="labelWidth">
+                   <el-input v-model.trim="form.serviceId" auto-complete="off"></el-input>
                </el-form-item>
                <el-form-item prop="uri" label="路由地址" :label-width="labelWidth">
                    <el-input v-model.trim="form.uri" auto-complete="off"></el-input>
@@ -56,35 +58,62 @@
 </body>
 
 <script src="/js/vue.js"></script>
+<script src="/js/vue-resource.min.js"></script>
 <script src="/js/element.js"></script>
 <script src="/js/util.js"></script>
 <script>
-
     var app = new Vue({
         el: '#app',
         data:{
             labelWidth:"100px",
             dialogVisible:false,
             tableData:[],
-            form:{}
+            form:{"filters":1,"predicates":"",order:1,"uri":""}
         },
         methods: {
             init:function(){
                 var that = this;
-                this.ajax.get("/route/routes",function (data){
-                    that.tableData = data;
-                },"json");//json
+                that.ajax.ajaxGet(that,'/route/routes',function(response){
+                    if(response.status==200){
+                        that.tableData = response.data;
+                    }
+                })
+
+            },
+            btnToDel:function(index,row){
+                var that = this;
+                that.$confirm("确定要删除嘛？QAQ", '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'danger'
+                }).then(() => {
+                    that.ajax.ajaxGet(that,'/route/delete/'+row.id,function(response){
+                        if(response.status==200){
+                            that.init();
+                        }
+                    })
+                }).catch(() => {
+                });
             },
             btnToDetail:function (index,row) {
-                
+
             },
-            btnToEdit:function () {
+            btnToAdd:function(){
+                this.dialogVisible = true;
+            },
+            btnToEdit:function (index,row) {
+                this.form =JSON.parse(JSON.stringify(row));
                 this.dialogVisible = true;
             },
             save:function () {
-                this.ajax.post("/route/add",this.form,function (data){
-                    console.log(data);
-                },"str");//json
+                var that = this;
+                console.log(JSON.parse(JSON.stringify(this.form)));
+                that.ajax.ajaxPost(that,'/route/add',JSON.parse(JSON.stringify(this.form)),function(response){
+                    if(response.status==200){
+                        that.dialogVisible = false;
+                        that.init();
+                    }
+                })
             }
         },
         created: function () {
