@@ -47,6 +47,7 @@ public class GatewayServiceHandler implements ApplicationEventPublisherAware, Co
     @Autowired
     private GatewayRouteMapper gatewayRouteMapper;
 
+    // springboot启动后执行
     @Override
     public void run(String... args){
         this.loadRouteConfig();
@@ -60,19 +61,14 @@ public class GatewayServiceHandler implements ApplicationEventPublisherAware, Co
 
         gatewayRouteList.forEach(gatewayRoute -> {
             RouteDefinition definition = new RouteDefinition();
+
             Map<String, String> predicateParams = new HashMap<>(8);
             PredicateDefinition predicate = new PredicateDefinition();
-            FilterDefinition filterDefinition = new FilterDefinition();
+
+            FilterDefinition filter = new FilterDefinition();
             Map<String, String> filterParams = new HashMap<>(8);
 
-            URI uri = null;
-            if(gatewayRoute.getUri().startsWith("http")){
-                //http地址
-                uri = UriComponentsBuilder.fromHttpUrl(gatewayRoute.getUri()).build().toUri();
-            }else{
-                //注册中心
-                uri = UriComponentsBuilder.fromUriString("lb://"+gatewayRoute.getUri()).build().toUri();
-            }
+            URI uri = UriComponentsBuilder.fromHttpUrl(gatewayRoute.getUri()).build().toUri();
 
             definition.setId(gatewayRoute.getId().toString());
             // 名称是固定的，spring gateway会根据名称找对应的PredicateFactory
@@ -80,17 +76,14 @@ public class GatewayServiceHandler implements ApplicationEventPublisherAware, Co
             predicateParams.put("pattern",gatewayRoute.getPredicates());
             predicate.setArgs(predicateParams);
 
-            // 名称是固定的, 路径去前缀
-            filterDefinition.setName("StripPrefix");
+            // 名称是固定的, 路径去前缀(从前面截取一个，实际上就是截取url，后面的部分才是转发的url)
+            filter.setName("StripPrefix");
             filterParams.put("_genkey_0", gatewayRoute.getFilters().toString());
-            filterDefinition.setArgs(filterParams);
-
-            PredicateDefinition predicate2 = new PredicateDefinition();
-            predicate2.setName("Query");
-
+            filter.setArgs(filterParams);
 
             definition.setPredicates(Arrays.asList(predicate));
-            definition.setFilters(Arrays.asList(filterDefinition));
+            definition.setFilters(Arrays.asList(filter));
+
             definition.setUri(uri);
             routeDefinitionWriter.save(Mono.just(definition)).subscribe();
         });
