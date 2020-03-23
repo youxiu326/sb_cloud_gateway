@@ -1,8 +1,10 @@
 
 参考博客：https://blog.csdn.net/qq_42714869/article/details/92794911?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
 
+
 概念：https://cloud.tencent.com/developer/article/1403887
 https://cloud.tencent.com/developer/article/1384112
+
 
 ```
 查看路由配置信息  http://localhost:8080/route/routes
@@ -20,6 +22,8 @@ https://cloud.tencent.com/developer/article/1384112
 访问：http://localhost:8080/api-baidu/
 
 ```
+
+
 
 
 Spring Cloud Gateway 代理日志记录 Filter
