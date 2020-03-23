@@ -2,7 +2,6 @@
 spring:
   datasource:
     password: zz123456.ZZ
-    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://youxiu326.xin:3306/super_man?useUnicode=true&characterEncoding=utf8
     username: youxiu326
   redis:
@@ -22,3 +21,8 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*.xml
+
+# 日志输出路径，例如日志文件存放于 /Users/su/Desktop/java/pv/pv.log
+# 过滤器记录日志参考简书：https://www.jianshu.com/p/350d26dea23f
+logging:
+  path: /Users/su/Desktop/java/

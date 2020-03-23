@@ -20,3 +20,16 @@ https://cloud.tencent.com/developer/article/1384112
 访问：http://localhost:8080/api-baidu/
 
 ```
+
+
+Spring Cloud Gateway 代理日志记录 Filter
+参考博客：https://www.jianshu.com/p/350d26dea23f
+
+    新增包：filter包
+    
+    新增配置类：configuration/GatewayLoggerProfile.java
+    
+    新增日志输出路径：
+                logging:
+                  path: /Users/su/Desktop/java/
+    
