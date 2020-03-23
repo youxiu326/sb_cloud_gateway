@@ -1,19 +1,21 @@
 /*
-Navicat MySQL Data Transfer
+ Navicat MySQL Data Transfer
 
-Source Server         : ismy
-Source Server Version : 50725
-Source Host           : youxiu326.xin:3306
-Source Database       : super_man
+ Source Server         : 阿里云服务器
+ Source Server Type    : MySQL
+ Source Server Version : 50725
+ Source Host           : youxiu326.xin:3306
+ Source Schema         : super_man
 
-Target Server Type    : MYSQL
-Target Server Version : 50725
-File Encoding         : 65001
+ Target Server Type    : MySQL
+ Target Server Version : 50725
+ File Encoding         : 65001
 
-Date: 2020-03-02 14:55:34
+ Date: 23/03/2020 14:47:09
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for gateway_route
@@ -33,10 +35,16 @@ CREATE TABLE `gateway_route` (
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of gateway_route
 -- ----------------------------
-INSERT INTO `gateway_route` VALUES ('1', 'serviceNode1', 'http://baidu.com', '/api-baidu/**', '1', '0', '', '2020-03-02 00:05:59', '', '2020-03-02 00:50:27', null, '0');
-INSERT INTO `gateway_route` VALUES ('2', 'serviceNode2', 'https://www.taobao.com/', '/api-taobao/**', '1', '0', '', '2020-03-02 00:51:30', null, null, null, '0');
+BEGIN;
+INSERT INTO `gateway_route` VALUES (1, 'serviceNode1', 'https://baidu.com/', '/api-baidu/**', '1', '0', '', '2020-03-02 00:05:59', '', '2020-03-02 00:50:27', NULL, '0');
+INSERT INTO `gateway_route` VALUES (2, 'serviceNode2', 'https://www.taobao.com/', '/api-taobao/**', '1', '0', '', '2020-03-02 00:51:30', NULL, NULL, NULL, '0');
+INSERT INTO `gateway_route` VALUES (8, 'serviceNode3', 'https://youxiu326.xin/', '/youxiu326/**', '1', '1', '', '2020-03-23 01:41:45', NULL, NULL, NULL, '0');
+INSERT INTO `gateway_route` VALUES (10, 'serviceNode4', 'https://suggest.taobao.com/', '/search/**', '1', '1', '', '2020-03-23 01:45:59', NULL, NULL, NULL, '0');
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

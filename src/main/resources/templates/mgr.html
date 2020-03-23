@@ -73,6 +73,7 @@
         methods: {
             init:function(){
                 var that = this;
+                that.form = {"filters":1,"predicates":"",order:1,"uri":""};
                 that.ajax.ajaxGet(that,'/route/routes',function(response){
                     if(response.status==200){
                         that.tableData = response.data;

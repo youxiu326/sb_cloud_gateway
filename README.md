@@ -25,6 +25,8 @@ https://cloud.tencent.com/developer/article/1384112
 Spring Cloud Gateway 代理日志记录 Filter
 参考博客：https://www.jianshu.com/p/350d26dea23f
 
+    查询效果可以访问：http://localhost:8080/search/sug?code=utf-8&q=%E5%8D%AB%E8%A1%A3&callback=cb
+
     新增包：filter包
     
     新增配置类：configuration/GatewayLoggerProfile.java
